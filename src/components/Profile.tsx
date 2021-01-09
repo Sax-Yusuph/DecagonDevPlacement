@@ -10,7 +10,7 @@ import {
 	Button,
 } from '@chakra-ui/react'
 import { FiPhoneCall, FiSmartphone } from 'react-icons/fi'
-export default function Profile() {
+export default function Profile({ profile }: any) {
 	return (
 		<VStack alignItems='flex-start'>
 			<Button leftIcon={<ArrowBackIcon />} color='gray.500' variant='ghost'>
@@ -20,36 +20,34 @@ export default function Profile() {
 			<Box>
 				<HStack alignItems='flex-start' spacing={5}>
 					<Circle p={1} bg='teal.300'>
-						<Avatar src='' alt='profile' size='2xl' />
+						<Avatar src={profile.picture.large} alt='profile' size='2xl' />
 					</Circle>
 					<VStack alignItems='flex-start' spacing={4}>
 						<Text as='h4' fontWeight='bold'>
-							{' '}
-							Mrs. Shalom Chioma
+							{`${profile.name.title} ${profile.name.first} ${profile.name.last}`}
 						</Text>
 						<Text as='p' color='gray.600' fontSize='0.9rem'>
-							{' '}
-							45, church street alapere, ketu
+							{`${profile.location.street.number}, ${profile.location.street.name} ${profile.location.state}`}
 						</Text>
 
 						<HStack bg='gray.300' rounded='2xl' py={2} px={3}>
 							<EmailIcon />
 							<Text as='p' fontSize='0.9rem'>
-								Yusuphshamsondeen@gmail.com
+								{profile.email}
 							</Text>
 						</HStack>
 						<HStack bg='pink.200' rounded='2xl' py={2} px={3}>
 							<Text as='p' fontSize='0.9rem'>
-								JOINED: 2020-01-02
+								JOINED: {profile.registered.date}
 							</Text>
 						</HStack>
 						<HStack rounded='2xl' color='gray.500'>
 							<Icon as={FiPhoneCall} />
-							<Text fontSize='0.9rem'>07011359405</Text>
+							<Text fontSize='0.9rem'>{profile.phone}</Text>
 						</HStack>
 						<HStack rounded='2xl' color='gray.500'>
 							<Icon as={FiSmartphone} />
-							<Text fontSize='0.9rem'>07011359405</Text>
+							<Text fontSize='0.9rem'>{profile.cell}</Text>
 						</HStack>
 					</VStack>
 				</HStack>

@@ -14,7 +14,11 @@ import {
 	Circle,
 } from '@chakra-ui/react'
 
-export default function ResultCard() {
+export default function ResultCard({ user, setProfile, setResults }: any) {
+	const handleClick = (user: any) => {
+		setResults([])
+		setProfile([user])
+	}
 	return (
 		<HStack mb={3} bg='white' shadow='xl' p={5} spacing={3} borderRadius='xl'>
 			<Circle p={1} bg='teal.300'>
@@ -22,23 +26,21 @@ export default function ResultCard() {
 			</Circle>
 			<VStack color='black' alignItems='flex-start' spacing='1'>
 				<Text as='h4' fontWeight='bold'>
-					{' '}
-					Shalom Chioma
+					{`${user.name.title} ${user.name.first} ${user.name.last}`}
 				</Text>
-				<Text as='p' color='gray.600' fontSize='0.9rem'>
-					{' '}
-					45, church street alapere, ketu
+				<Text as='p' color='gray.600' fontSize='0.9rem' fontStyle='italic'>
+					{`${user.location.street.number}, ${user.location.street.name} ${user.location.state}`}
 				</Text>
 				<HStack color='gray.400' justifyContent='space-between' flexWrap='wrap'>
 					<HStack>
 						<EmailIcon />
 						<Text as='p' fontSize='0.9rem'>
-							Yusuphshamsondeen@gmail.com
+							{user.email}
 						</Text>
 					</HStack>
 					<HStack>
 						<PhoneIcon />
-						<Text fontSize='0.9rem'>07011359405</Text>
+						<Text fontSize='0.9rem'>{user.phone}</Text>
 					</HStack>
 					<IconButton
 						shadow='xl'
@@ -48,6 +50,7 @@ export default function ResultCard() {
 						transition='all .3s'
 						icon={<ArrowForwardIcon color='white' />}
 						_hover={{ shadow: '2xl', transform: 'scale(1.1)' }}
+						onClick={() => handleClick(user)}
 					/>
 				</HStack>
 			</VStack>

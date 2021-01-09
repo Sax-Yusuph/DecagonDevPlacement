@@ -15,12 +15,13 @@ import fetchUsers from '../hooks/fetchUsers'
 const Index = () => {
 	const [params, setParams] = useState({})
 	const [page, setPage] = useState(1)
-	const [profile, SetProfile] = useState({})
+	const [profile, SetProfile] = useState([])
 	const { users, loading, error, hasNextPage } = fetchUsers(params, page)
+	const [results, setResults] = useState(users)
 	console.log(users, loading, error, hasNextPage)
 
 	function handleParamChange(newParams: any) {
-		setPage(1)
+		setPage(page)
 		setParams(newParams)
 	}
 
@@ -51,17 +52,22 @@ const Index = () => {
 					flexDir='column'
 				>
 					<Filter />
-					{/* {users.length > 0 && (
+					{results.length > 0 && (
 						<Box overflowY='auto' overflowX='hidden'>
-							{Array(3)
-								.fill(' ')
-								.map((_, i) => {
-									return <ResultCard key={i} />
-								})}
+							{users.map((user: any) => {
+								return (
+									<ResultCard
+										key={user.id.value}
+										user={user}
+										SetProfile={SetProfile}
+										setResults={setResults}
+									/>
+								)
+							})}
 						</Box>
-					)} */}
-					<Profile />
-					{/* <Footer paginate={handlePagination} /> */}
+					)}
+					{profile.length > 0 && <Profile profile={profile[0]} />}
+					<Footer paginate={handlePagination} />
 				</Box>
 				{/* <DarkModeSwitch /> */}
 			</SimpleGrid>
