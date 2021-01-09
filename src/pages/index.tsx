@@ -8,6 +8,7 @@ import { Footer } from '../components/Footer'
 import { HomeMenu } from '../components/HomeMenu'
 import Filter from '../components/Filter'
 import ResultCard from '../components/ResultCard'
+import Profile from '../components/Profile'
 
 const Index = () => (
 	<Container height='100vh' bg='blue.800' overflow='hidden'>
@@ -34,7 +35,7 @@ const Index = () => (
 							return <ResultCard key={i} />
 						})}
 				</Box> */}
-
+				<Profile />
 				<Footer />
 			</Box>
 			{/* <DarkModeSwitch /> */}

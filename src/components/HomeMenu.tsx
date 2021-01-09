@@ -33,8 +33,10 @@ function RadioCard(props: any) {
 				borderWidth='1px'
 				borderRadius='lg'
 				boxShadow='md'
+				border='none'
 				bg={props.color}
-				transition='all .5s ease-in-out'
+				transition='all .2s ease-in-out'
+				color='white'
 				_checked={{
 					color: 'white',
 					// bg:
@@ -125,7 +127,7 @@ export const HomeMenu = ({ title }: { title?: string }) => {
 							<RadioCard {...radio} color={getColorProp(value)}>
 								<Icon as={getIconProp(value)} />
 							</RadioCard>
-							<Text as='span' fontSize='10px'>
+							<Text as='span' color='white' fontSize='10px'>
 								{value}
 							</Text>
 						</VStack>
