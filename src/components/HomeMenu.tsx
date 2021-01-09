@@ -58,14 +58,17 @@ function RadioCard(props: any) {
 		</Box>
 	)
 }
-
-export const HomeMenu = ({ title }: { title?: string }) => {
-	const options = ['All users', 'Male users', 'Female users']
+interface MenuProps {
+	title?: string
+	changeParams: (params: any) => void
+}
+export const HomeMenu = ({ title, changeParams }: MenuProps) => {
+	const options = ['All users', 'male', 'female']
 
 	const { getRootProps, getRadioProps } = useRadioGroup({
 		name: 'option',
 		defaultValue: 'All users',
-		onChange: console.log,
+		onChange: val => changeParams({ gender: val }),
 	})
 	const group = getRootProps()
 	const getColorProp = (value: string) =>
@@ -128,7 +131,11 @@ export const HomeMenu = ({ title }: { title?: string }) => {
 								<Icon as={getIconProp(value)} />
 							</RadioCard>
 							<Text as='span' color='white' fontSize='10px'>
-								{value}
+								{value == 'male'
+									? 'Male Users'
+									: value === 'female'
+									? 'Female Users'
+									: value}
 							</Text>
 						</VStack>
 					)

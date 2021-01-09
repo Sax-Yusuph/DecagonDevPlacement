@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { GiCloudDownload, GiRayGun } from 'react-icons/gi'
 
-export const Footer = (props: FlexProps) => (
+export const Footer = ({ paginate }) => (
 	<Box
 		as='div'
 		alignSelf='flex-end'
@@ -37,6 +37,7 @@ export const Footer = (props: FlexProps) => (
 					bgColor='gray.400'
 					_hover={{ bgColor: 'gray.600' }}
 					_focus={{ outline: 'none', bgColor: 'gray.400' }}
+					onClick={paginate('prev')}
 				/>
 				<IconButton
 					aria-label='previous'
@@ -44,6 +45,7 @@ export const Footer = (props: FlexProps) => (
 					bgColor='gray.600'
 					_hover={{ bgColor: 'gray.800' }}
 					_focus={{ outline: 'none', bgColor: 'gray.600' }}
+					onClick={paginate('next')}
 				/>
 			</HStack>
 		</HStack>
