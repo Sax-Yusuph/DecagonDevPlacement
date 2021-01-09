@@ -1,56 +1,45 @@
-import {
-  Link as ChakraLink,
-  Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
-} from '@chakra-ui/react'
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
+import { Link as ChakraLink, SimpleGrid, Box } from '@chakra-ui/react'
 
-import { Hero } from '../components/Hero'
 import { Container } from '../components/Container'
 import { Main } from '../components/Main'
 import { DarkModeSwitch } from '../components/DarkModeSwitch'
 import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
+import { HomeMenu } from '../components/HomeMenu'
+import Filter from '../components/Filter'
+import ResultCard from '../components/ResultCard'
 
 const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
-        <Code>typescript</Code>.
-      </Text>
+	<Container height='100vh' bg='blue.800' overflow='hidden'>
+		<SimpleGrid columns={2} spacing={10}>
+			<HomeMenu />
+			<Box
+				m='4'
+				p={5}
+				px={10}
+				borderRadius='md'
+				bg='gray.100'
+				minWidth='50vw'
+				h='96vh'
+				pos='relative'
+				overflow='hidden'
+				display='flex'
+				flexDir='column'
+			>
+				<Filter />
+				{/* <Box overflowY='auto' overflowX='hidden'>
+					{Array(3)
+						.fill(' ')
+						.map((_, i) => {
+							return <ResultCard key={i} />
+						})}
+				</Box> */}
 
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
-
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
+				<Footer />
+			</Box>
+			{/* <DarkModeSwitch /> */}
+		</SimpleGrid>
+	</Container>
 )
 
 export default Index

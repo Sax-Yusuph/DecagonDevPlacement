@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.0",
+    "@chakra-ui/icons": "^1.0.2",
     "@chakra-ui/react": "^1.0.0",
     "@chakra-ui/theme-tools": "1.0.0",
     "@emotion/react": "11.1.1",
@@ -15,7 +15,8 @@
     "framer-motion": "^2.9.4",
     "next": "latest",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-icons": "^4.1.0"
   },
   "devDependencies": {
     "@types/node": "^14.6.0",
