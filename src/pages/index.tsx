@@ -1,24 +1,64 @@
+import { GetStaticProps } from 'next'
+import axios from 'axios'
+import useSWR from 'swr'
 import { Link as ChakraLink, SimpleGrid, Box } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
-import { Footer } from '../components/Footer'
 import { HomeMenu } from '../components/HomeMenu'
 import Filter from '../components/Filter'
 import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
-import { useState } from 'react'
-import fetchUsers from '../hooks/fetchUsers'
+import { useEffect, useState } from 'react'
+import fetcher from '../hooks/fetchUsers'
 
-const Index = () => {
+const BASE_URL = 'https://randomuser.me/api/'
+const COUNTRIES = [
+	'Default',
+	'AU',
+	'BR',
+	'CA',
+	'CH',
+	'DE',
+	'DK',
+	'ES',
+	'FI',
+	'FR',
+	'GB',
+	'IE',
+	'IR',
+	'NO',
+	'NL',
+	'NZ',
+	'TR',
+	'US',
+]
+
+const Index = ({ users }: any) => {
+	const [shouldFetch, setShouldFetch] = useState(false)
 	const [params, setParams] = useState({})
 	const [page, setPage] = useState(1)
 	const [profile, SetProfile] = useState([])
-	const { users, loading, error, hasNextPage } = fetchUsers(params, page)
-	const [results, setResults] = useState(users)
-	console.log(users, loading, error, hasNextPage)
+	const [country, setCountry] = useState(COUNTRIES)
+
+	const { data, error } = useSWR(
+		shouldFetch
+			? `${BASE_URL}/?page=${page}&results=${10}&seed=abc&nat=${country.join()}`
+			: null,
+		fetcher,
+		{
+			initialData: users,
+		}
+	)
+
+	// const { users, loading, error, hasNextPage } = fetchUsers(params, page)
+	// console.log(users, loading, error, hasNextPage)
+
+	useEffect(() => {
+		const fetchState = () => {
+			setShouldFetch(true)
+		}
+		fetchState()
+	}, [params, page])
 
 	function handleParamChange(newParams: any) {
 		setPage(page)
@@ -52,22 +92,26 @@ const Index = () => {
 					flexDir='column'
 				>
 					<Filter />
-					{results.length > 0 && (
+
+					{data && (
 						<Box overflowY='auto' overflowX='hidden'>
-							{users.map((user: any) => {
+							{data.map((user: any) => {
 								return (
 									<ResultCard
 										key={user.id.value}
 										user={user}
 										SetProfile={SetProfile}
-										setResults={setResults}
+										// setResults={setResults}
 									/>
 								)
 							})}
 						</Box>
 					)}
+
+					{!data && <div>loading...</div>}
+					{error && <div>failed to load</div>}
 					{profile.length > 0 && <Profile profile={profile[0]} />}
-					<Footer paginate={handlePagination} />
+					{/* <Footer paginate={handlePagination} /> */}
 				</Box>
 				{/* <DarkModeSwitch /> */}
 			</SimpleGrid>
@@ -76,3 +120,15 @@ const Index = () => {
 }
 
 export default Index
+
+export const getStaticProps: GetStaticProps = async () => {
+	// Todos
+	//1. get query params from ctx and fetch dynamically
+	// from the database or run cloud functions if its not present
+
+	const res = await axios(BASE_URL, {
+		params: { seed: 'abc', results: 5 },
+	})
+
+	return { results: await res.data.results }
+}

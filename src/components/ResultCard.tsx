@@ -22,7 +22,7 @@ export default function ResultCard({ user, setProfile, setResults }: any) {
 	return (
 		<HStack mb={3} bg='white' shadow='xl' p={5} spacing={3} borderRadius='xl'>
 			<Circle p={1} bg='teal.300'>
-				<Avatar src='' alt='SY' size='lg' />
+				<Avatar src={user.picture.medium} size='lg' />
 			</Circle>
 			<VStack color='black' alignItems='flex-start' spacing='1'>
 				<Text as='h4' fontWeight='bold'>
