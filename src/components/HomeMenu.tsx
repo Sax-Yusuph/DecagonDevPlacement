@@ -13,6 +13,8 @@ import {
 } from '@chakra-ui/react'
 import { FaUsers, FaMale, FaFemale } from 'react-icons/fa'
 import { SearchIcon } from '@chakra-ui/icons'
+import { Dispatch, SetStateAction } from 'react'
+import { Params } from '../interfaces'
 // import RadioCard from './RadioButtons'
 
 function RadioCard(props: any) {
@@ -59,17 +61,25 @@ function RadioCard(props: any) {
 	)
 }
 interface MenuProps {
-	title?: string
-	changeParams: (params: any) => void
+	params: Params
+	setParams: Dispatch<SetStateAction<Params>>
+	mutate: () => Promise<any>
+	filter: (gender: string) => void
 }
-export const HomeMenu = ({ title, changeParams }: MenuProps) => {
+
+export const HomeMenu = ({ params, setParams, mutate, filter }: MenuProps) => {
 	const options = ['All users', 'male', 'female']
 
 	const { getRootProps, getRadioProps } = useRadioGroup({
 		name: 'option',
 		defaultValue: 'All users',
-		onChange: val => changeParams({ gender: val }),
+		onChange: (val: string) => {
+			setParams(prevParams => ({ ...prevParams, gender: val }))
+			filter(val)
+			// mutate()
+		},
 	})
+
 	const group = getRootProps()
 	const getColorProp = (value: string) =>
 		value === 'All users'
@@ -77,6 +87,7 @@ export const HomeMenu = ({ title, changeParams }: MenuProps) => {
 			: value === 'Male users'
 			? 'teal.500'
 			: 'purple.500'
+
 	const getIconProp = (value: string) =>
 		value === 'All users' ? FaUsers : value === 'Males' ? FaMale : FaFemale
 
@@ -102,6 +113,8 @@ export const HomeMenu = ({ title, changeParams }: MenuProps) => {
 					borderRadius={'xl'}
 					variant='filled'
 					placeholder='Search'
+					value={params.seed}
+					onChange={e => setParams(p => ({ ...p, seed: e.target.value }))}
 					size='lg'
 					_focus={{
 						outline: 'none',

@@ -9,7 +9,7 @@ import Filter from '../components/Filter'
 import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
 import { useEffect, useState } from 'react'
-import fetcher from '../hooks/fetchUsers'
+import { Params } from '../interfaces'
 
 const BASE_URL = 'https://randomuser.me/api/'
 const COUNTRIES = [
@@ -32,52 +32,62 @@ const COUNTRIES = [
 	'TR',
 	'US',
 ]
+const PARAMS = {
+	page: 1,
+	gender: '',
+	seed: '',
+	results: 10,
+	nat: '',
+}
 
 const Index = ({ users }: any) => {
-	const [shouldFetch, setShouldFetch] = useState(false)
-	const [params, setParams] = useState({})
-	const [page, setPage] = useState(1)
+	const [params, setParams] = useState<Params>(PARAMS)
+	const { data, error, mutate } = useSWR([BASE_URL, params], {
+		initialData: users,
+	})
+
 	const [profile, SetProfile] = useState([])
-	const [country, setCountry] = useState(COUNTRIES)
+	const [usersList, setUsersList] = useState<any[]>(data)
 
-	const { data, error } = useSWR(
-		shouldFetch
-			? `${BASE_URL}/?page=${page}&results=${10}&seed=abc&nat=${country.join()}`
-			: null,
-		fetcher,
-		{
-			initialData: users,
-		}
-	)
+	console.log(`params ---- ${JSON.stringify(params, null, 2)}}`)
 
-	// const { users, loading, error, hasNextPage } = fetchUsers(params, page)
-	// console.log(users, loading, error, hasNextPage)
+	// if (data) setUsersList(data)
 
-	useEffect(() => {
-		const fetchState = () => {
-			setShouldFetch(true)
-		}
-		fetchState()
-	}, [params, page])
-
-	function handleParamChange(newParams: any) {
-		setPage(page)
-		setParams(newParams)
-	}
-
-	function handlePagination(param: string) {
-		if (param === 'next') {
-			setPage(page + 1)
-		}
-		if (param === 'prev' && page > 1) {
-			setPage(page - 1)
+	const filterByGender = (gender: string) => {
+		let filter = data
+		switch (gender) {
+			case 'male':
+				filter = usersList.map(user => user.gender === 'male')
+				setUsersList(filter)
+				break
+			case 'female':
+				filter = usersList.map(user => user.gender === 'female')
+				setUsersList(filter)
+				break
+			default:
+				setUsersList(filter)
+				break
 		}
 	}
 
+	function handlePagination(val: string) {
+		if (val === 'next') {
+			setParams(prev => ({ ...prev, page: params.page + 1 }))
+		}
+		if (val === 'prev' && params.page > 1) {
+			setParams(prev => ({ ...prev, page: params.page - 1 }))
+		}
+	}
+	console.log(data)
 	return (
 		<Container height='100vh' bg='blue.800' overflow='hidden'>
 			<SimpleGrid columns={2} spacing={10}>
-				<HomeMenu changeParams={handleParamChange} />
+				<HomeMenu
+					params={params}
+					setParams={setParams}
+					mutate={mutate}
+					filter={filterByGender}
+				/>
 				<Box
 					m='4'
 					p={5}
@@ -93,12 +103,12 @@ const Index = ({ users }: any) => {
 				>
 					<Filter />
 
-					{data && (
+					{usersList && (
 						<Box overflowY='auto' overflowX='hidden'>
-							{data.map((user: any) => {
+							{usersList?.map((user: any) => {
 								return (
 									<ResultCard
-										key={user.id.value}
+										key={user?.login?.uuid || Math.random()}
 										user={user}
 										SetProfile={SetProfile}
 										// setResults={setResults}
@@ -108,8 +118,9 @@ const Index = ({ users }: any) => {
 						</Box>
 					)}
 
-					{!data && <div>loading...</div>}
+					{!usersList && <div>loading...</div>}
 					{error && <div>failed to load</div>}
+
 					{profile.length > 0 && <Profile profile={profile[0]} />}
 					{/* <Footer paginate={handlePagination} /> */}
 				</Box>
@@ -127,8 +138,8 @@ export const getStaticProps: GetStaticProps = async () => {
 	// from the database or run cloud functions if its not present
 
 	const res = await axios(BASE_URL, {
-		params: { seed: 'abc', results: 5 },
+		params: { seed: 'abc', results: 100 },
 	})
 
-	return { results: await res.data.results }
+	return { props: { users: await res.data.results } }
 }
