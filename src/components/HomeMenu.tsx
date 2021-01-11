@@ -63,11 +63,9 @@ function RadioCard(props: any) {
 interface MenuProps {
 	params: Params
 	setParams: Dispatch<SetStateAction<Params>>
-	mutate: () => Promise<any>
-	filter: (gender: string) => void
 }
 
-export const HomeMenu = ({ params, setParams, mutate, filter }: MenuProps) => {
+export const HomeMenu = ({ params, setParams }: MenuProps) => {
 	const options = ['All users', 'male', 'female']
 
 	const { getRootProps, getRadioProps } = useRadioGroup({
@@ -75,8 +73,6 @@ export const HomeMenu = ({ params, setParams, mutate, filter }: MenuProps) => {
 		defaultValue: 'All users',
 		onChange: (val: string) => {
 			setParams(prevParams => ({ ...prevParams, gender: val }))
-			filter(val)
-			// mutate()
 		},
 	})
 

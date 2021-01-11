@@ -42,33 +42,25 @@ const PARAMS = {
 
 const Index = ({ users }: any) => {
 	const [params, setParams] = useState<Params>(PARAMS)
-	const { data, error, mutate } = useSWR([BASE_URL, params], {
-		initialData: users,
-	})
 
 	const [profile, SetProfile] = useState([])
-	const [usersList, setUsersList] = useState<any[]>(data)
+	const [usersList, setUsersList] = useState<any[]>(users)
+	const [loading, setLoading] = useState(false)
 
-	console.log(`params ---- ${JSON.stringify(params, null, 2)}}`)
-
-	// if (data) setUsersList(data)
-
-	const filterByGender = (gender: string) => {
-		let filter = data
-		switch (gender) {
-			case 'male':
-				filter = usersList.map(user => user.gender === 'male')
-				setUsersList(filter)
-				break
-			case 'female':
-				filter = usersList.map(user => user.gender === 'female')
-				setUsersList(filter)
-				break
-			default:
-				setUsersList(filter)
-				break
+	useEffect(() => {
+		const cancelToken = axios.CancelToken.source()
+		async function upDateData() {
+			setLoading(true)
+			const res = await axios(BASE_URL, {
+				cancelToken: cancelToken.token,
+				params,
+			})
+			setLoading(false)
+			setUsersList(res.data.results)
 		}
-	}
+		upDateData()
+		return () => cancelToken.cancel()
+	}, [params])
 
 	function handlePagination(val: string) {
 		if (val === 'next') {
@@ -78,16 +70,11 @@ const Index = ({ users }: any) => {
 			setParams(prev => ({ ...prev, page: params.page - 1 }))
 		}
 	}
-	console.log(data)
+
 	return (
 		<Container height='100vh' bg='blue.800' overflow='hidden'>
 			<SimpleGrid columns={2} spacing={10}>
-				<HomeMenu
-					params={params}
-					setParams={setParams}
-					mutate={mutate}
-					filter={filterByGender}
-				/>
+				<HomeMenu params={params} setParams={setParams} />
 				<Box
 					m='4'
 					p={5}
@@ -103,9 +90,9 @@ const Index = ({ users }: any) => {
 				>
 					<Filter />
 
-					{usersList && (
+					{usersList.length && (
 						<Box overflowY='auto' overflowX='hidden'>
-							{usersList?.map((user: any) => {
+							{(usersList || []).map((user: any) => {
 								return (
 									<ResultCard
 										key={user?.login?.uuid || Math.random()}
@@ -118,8 +105,8 @@ const Index = ({ users }: any) => {
 						</Box>
 					)}
 
-					{!usersList && <div>loading...</div>}
-					{error && <div>failed to load</div>}
+					{(loading || !usersList?.length) && <div>loading...</div>}
+					{/* {error && <div>failed to load</div>} */}
 
 					{profile.length > 0 && <Profile profile={profile[0]} />}
 					{/* <Footer paginate={handlePagination} /> */}
