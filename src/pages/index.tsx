@@ -1,9 +1,6 @@
 import { Link as ChakraLink, SimpleGrid, Box } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
 import { Footer } from '../components/Footer'
 import { HomeMenu } from '../components/HomeMenu'
 import Filter from '../components/Filter'
@@ -11,6 +8,9 @@ import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
 import { useState } from 'react'
 import fetchUsers from '../hooks/fetchUsers'
+import { GetStaticProps } from 'next'
+import axios from 'axios'
+import { BASE_URL, PARAMS } from '../options/options'
 
 const Index = () => {
 	const [params, setParams] = useState({})
@@ -76,3 +76,15 @@ const Index = () => {
 }
 
 export default Index
+
+export const getStaticProps: GetStaticProps = async () => {
+	// Todos
+	//1. get query params from ctx and fetch dynamically
+	// from the database or run cloud functions if its not present
+
+	const res = await axios(BASE_URL, {
+		params: { ...PARAMS },
+	})
+
+	return { props: { users: await res.data.results } }
+}
