@@ -11,10 +11,10 @@ import {
 	VStack,
 	useRadio,
 } from '@chakra-ui/react'
-import { FaUsers, FaMale, FaFemale } from 'react-icons/fa'
+import { getColorProp, getIconProp } from '../options/utils'
 import { SearchIcon } from '@chakra-ui/icons'
-import { Dispatch, SetStateAction } from 'react'
-import { Params } from '../interfaces'
+import { MenuProps } from '../interfaces'
+import { genderOptions } from '../options/options'
 // import RadioCard from './RadioButtons'
 
 function RadioCard(props: any) {
@@ -60,32 +60,17 @@ function RadioCard(props: any) {
 		</Box>
 	)
 }
-interface MenuProps {
-	params: Params
-	setParams: Dispatch<SetStateAction<Params>>
-}
 
-export const HomeMenu = ({ params, setParams }: MenuProps) => {
-	const options = ['All users', 'male', 'female']
-
+export const HomeMenu = ({ params, setParams, setFilter }: MenuProps) => {
 	const { getRootProps, getRadioProps } = useRadioGroup({
 		name: 'option',
 		defaultValue: 'All users',
-		onChange: (val: string) => {
-			setParams(prevParams => ({ ...prevParams, gender: val }))
+		onChange: val => {
+			setFilter(prev => ({ ...prev, gender: val }))
 		},
 	})
 
 	const group = getRootProps()
-	const getColorProp = (value: string) =>
-		value === 'All users'
-			? 'pink.500'
-			: value === 'Male users'
-			? 'teal.500'
-			: 'purple.500'
-
-	const getIconProp = (value: string) =>
-		value === 'All users' ? FaUsers : value === 'Males' ? FaMale : FaFemale
 
 	return (
 		<Box m={10} pt={10} minH='100%'>
@@ -132,7 +117,7 @@ export const HomeMenu = ({ params, setParams }: MenuProps) => {
 			</Text>
 
 			<HStack {...group} spacing={8}>
-				{options.map(value => {
+				{genderOptions.map((value: any) => {
 					const radio = getRadioProps({ value })
 					return (
 						<VStack spacing={2} key={value}>

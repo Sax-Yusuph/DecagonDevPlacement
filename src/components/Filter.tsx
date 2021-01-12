@@ -13,12 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { DarkModeSwitch } from './DarkModeSwitch'
+import { COUNTRIES } from '../options/options'
+import { MenuProps } from '../interfaces'
+import { getHeading } from '../options/utils'
 
-export default function Filter({
-	heading = 'All Users',
-}: {
-	heading?: string
-}) {
+export default function Filter({ params, setParams }: MenuProps) {
+	const heading = getHeading(params)
+
 	return (
 		<Box color='black' mb={8}>
 			<Heading mb={1}>{heading}</Heading>
@@ -51,13 +52,17 @@ export default function Filter({
 					}}
 					variant='filled'
 					placeholder='country'
-				/>
+					onChange={e => setParams(p => ({ ...p, nat: e.target.value }))}
+				>
+					{COUNTRIES.map(country => (
+						<option key={country} value={country}>
+							{country}
+						</option>
+					))}
+				</Select>
 
 				<FormControl display='flex' alignItems='center'>
-					<Switch id='email-alerts' />
-					<FormLabel htmlFor='email-alerts' ml='2'>
-						Show Country
-					</FormLabel>
+					<DarkModeSwitch />
 				</FormControl>
 			</HStack>
 		</Box>

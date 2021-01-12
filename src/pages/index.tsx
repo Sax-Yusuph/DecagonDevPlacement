@@ -1,6 +1,6 @@
 import { GetStaticProps } from 'next'
 import axios from 'axios'
-import { Link as ChakraLink, SimpleGrid, Box } from '@chakra-ui/react'
+import { SimpleGrid, Box } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
 import { HomeMenu } from '../components/HomeMenu'
@@ -8,61 +8,42 @@ import Filter from '../components/Filter'
 import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
 import { useEffect, useState } from 'react'
-import { Params } from '../interfaces'
+import { Filterprops, Params } from '../interfaces'
 import { Footer } from '../components/Footer'
-
-const BASE_URL = 'https://randomuser.me/api/'
-const COUNTRIES = [
-	'Default',
-	'AU',
-	'BR',
-	'CA',
-	'CH',
-	'DE',
-	'DK',
-	'ES',
-	'FI',
-	'FR',
-	'GB',
-	'IE',
-	'IR',
-	'NO',
-	'NL',
-	'NZ',
-	'TR',
-	'US',
-]
-const PARAMS = {
-	page: 1,
-	gender: '',
-	seed: 'abc',
-	results: 10,
-	nat: '',
-}
+import { PARAMS, BASE_URL, FILTER } from '../options/options'
+import { filterByGender } from '../options/utils'
 
 const Index = () => {
 	const [params, setParams] = useState<Params>(PARAMS)
+	const [filter, setFilter] = useState<Filterprops>(FILTER)
 
 	const [profile, setProfile] = useState([])
 	const [usersList, setUsersList] = useState<any[]>([])
 	const [loading, setLoading] = useState(false)
 	const [showProfile, setShowProfile] = useState(false)
+	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		const cancelToken = axios.CancelToken.source()
 		async function upDateData() {
 			setLoading(true)
 			setUsersList([])
-			const res = await axios(BASE_URL, {
-				cancelToken: cancelToken.token,
-				params,
-			})
-			setLoading(false)
-			setUsersList(res.data.results)
+			try {
+				const res = await axios(BASE_URL, {
+					cancelToken: cancelToken.token,
+					params,
+				})
+				const results = filterByGender('male', res.data.results)
+				setLoading(false)
+				setUsersList(results)
+			} catch (error) {
+				if (axios.isCancel(error)) return
+				setError(error.message)
+			}
 		}
 		upDateData()
 		return () => cancelToken.cancel()
-	}, [params])
+	}, [params, filter])
 
 	function handlePagination(val: string) {
 		if (val === 'next') {
@@ -76,7 +57,7 @@ const Index = () => {
 	return (
 		<Container height='100vh' bg='blue.800' overflow='hidden'>
 			<SimpleGrid columns={2} spacing={10}>
-				<HomeMenu params={params} setParams={setParams} />
+				<HomeMenu params={params} setParams={setParams} setFilter={setFilter} />
 				<Box
 					m='4'
 					p={5}
@@ -90,10 +71,10 @@ const Index = () => {
 					display='flex'
 					flexDir='column'
 				>
-					<Filter />
+					<Filter params={params} setParams={setParams} setFilter={setFilter} />
 
 					{!showProfile && (
-						<Box overflowY='auto' overflowX='hidden'>
+						<Box px={3} overflowY='auto' overflowX='hidden'>
 							{(usersList || []).map((user: any) => {
 								return (
 									<ResultCard
@@ -107,8 +88,8 @@ const Index = () => {
 						</Box>
 					)}
 
-					{(loading || !usersList?.length) && <div>loading...</div>}
-					{/* {error && <div>failed to load</div>} */}
+					{loading && !error && <div>loading...</div>}
+					{error && <div>{error}</div>}
 
 					{showProfile && (
 						<Profile profile={profile[0]} setShowProfile={setShowProfile} />

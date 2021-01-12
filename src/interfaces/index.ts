@@ -1,9 +1,11 @@
+import { Dispatch, SetStateAction } from 'react'
+
 export interface Params {
 	page: number
-	gender: string
+	gender?: string | number
 	seed: string
 	results: number | 10
-	nat: string | string[]
+	nat?: string | string[]
 }
 
 export interface iUser {
@@ -49,4 +51,15 @@ export interface iUser {
 		thumbnail: string
 	}
 	nat: string
+}
+
+export interface MenuProps {
+	params: Params
+	setParams: Dispatch<SetStateAction<Params>>
+	setFilter: Dispatch<SetStateAction<Filterprops>>
+}
+
+export interface Filterprops {
+	gender: string | number
+	search: string
 }
