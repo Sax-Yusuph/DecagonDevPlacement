@@ -70,4 +70,5 @@ export type Filterprops = { key: string; val: string | number }
 export interface FooterProps {
 	paginate: (val: string) => void
 	download: any[]
+	disableProps: boolean
 }

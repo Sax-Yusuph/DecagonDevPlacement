@@ -68,7 +68,7 @@ const Index = ({ users }: { users: any[] }) => {
 
 	return (
 		<Container height='100vh' bg='blue.800' overflow='hidden'>
-			<SimpleGrid columns={2} spacing={10}>
+			<SimpleGrid columns={[1, null, 2]} spacing={10}>
 				<HomeMenu filterState={filterState} setGender={setGender} />
 				<Box
 					m='4'
@@ -110,7 +110,11 @@ const Index = ({ users }: { users: any[] }) => {
 					{showProfile && (
 						<Profile profile={profile[0]} setShowProfile={setShowProfile} />
 					)}
-					<Footer paginate={paginate} download={UsersList} />
+					<Footer
+						paginate={paginate}
+						download={UsersList}
+						disableProps={showProfile ? true : false}
+					/>
 				</Box>
 			</SimpleGrid>
 		</Container>

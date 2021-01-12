@@ -5,7 +5,7 @@ import { FooterProps } from '../interfaces'
 import { CSV_DOWNLOAD_OPTIONS } from '../options/options'
 import { downloadCSV } from '../options/utils'
 
-export const Footer = ({ paginate, download }: FooterProps) => (
+export const Footer = ({ paginate, download, disableProps }: FooterProps) => (
 	<Box
 		as='div'
 		alignSelf='flex-end'
@@ -23,6 +23,7 @@ export const Footer = ({ paginate, download }: FooterProps) => (
 				_hover={{ bgColor: 'purple.600' }}
 				_focus={{ outline: 'none', bgColor: 'purple.400' }}
 				_active={{ bgColor: 'purple.600' }}
+				disabled={disableProps}
 				onClick={() =>
 					downloadCSV({ ...CSV_DOWNLOAD_OPTIONS, userData: download })
 				}
@@ -33,6 +34,7 @@ export const Footer = ({ paginate, download }: FooterProps) => (
 				<IconButton
 					aria-label='previous'
 					icon={<ChevronLeftIcon />}
+					disabled={disableProps}
 					bgColor='gray.400'
 					_hover={{ bgColor: 'gray.600' }}
 					_focus={{ outline: 'none', bgColor: 'gray.400' }}
@@ -40,6 +42,7 @@ export const Footer = ({ paginate, download }: FooterProps) => (
 				/>
 				<IconButton
 					aria-label='previous'
+					disabled={disableProps}
 					icon={<ChevronRightIcon />}
 					bgColor='gray.600'
 					_hover={{ bgColor: 'gray.800' }}
