@@ -20,7 +20,7 @@ export const COUNTRIES = [
 ]
 export const PARAMS = {
 	seed: 'foobar',
-	results: 50,
+	results: 100,
 }
 
 export const genderOptions: (string | number | undefined)[] = [

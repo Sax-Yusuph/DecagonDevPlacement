@@ -31,18 +31,23 @@ const Index = ({ users }: { users: any[] }) => {
 			setUsersList(data.slice(firstUserIndex, lastUserIndex))
 		}
 		updateUsersList()
-	}, [pageProps])
+	}, [pageProps, data])
 
 	function filterState({ key, val }: Filterprops) {
 		// check if key is a search
 		if (key === 'search') {
+			console.log(`search ---${key} ${val}`)
 			setData(filterbySearch(users, val))
 			return
 		}
+		console.log(`gender2 ---${key} ${val}`)
 		// if not, then perform these operations
-		if (key === 'gender' && val === 'All users') setData(users)
-		else {
+		if (key === 'gender' && val === 'All users') {
+			setData(users)
+			console.log(data)
+		} else {
 			setData(users.filter(user => user[key] === val))
+			console.log(data)
 		}
 	}
 
@@ -120,7 +125,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	// from the database or run cloud functions if its not present
 
 	const res = await axios(BASE_URL, {
-		params: { ...PARAMS, results: 100 },
+		params: { ...PARAMS },
 	})
 
 	return { props: { users: await res.data.results } }

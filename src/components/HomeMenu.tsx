@@ -10,7 +10,6 @@ import {
 	Icon,
 	VStack,
 	useRadio,
-	FormControl,
 } from '@chakra-ui/react'
 import { getColorProp, getIconProp } from '../options/utils'
 import { SearchIcon } from '@chakra-ui/icons'

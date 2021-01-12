@@ -1,8 +1,6 @@
 import {
 	Box,
-	Switch,
 	FormControl,
-	FormLabel,
 	Heading,
 	HStack,
 	Input,
