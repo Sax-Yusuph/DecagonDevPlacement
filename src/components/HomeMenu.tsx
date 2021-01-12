@@ -10,11 +10,13 @@ import {
 	Icon,
 	VStack,
 	useRadio,
+	FormControl,
 } from '@chakra-ui/react'
 import { getColorProp, getIconProp } from '../options/utils'
 import { SearchIcon } from '@chakra-ui/icons'
 import { MenuProps } from '../interfaces'
 import { genderOptions } from '../options/options'
+import { FormEvent, useState } from 'react'
 // import RadioCard from './RadioButtons'
 
 function RadioCard(props: any) {
@@ -61,12 +63,21 @@ function RadioCard(props: any) {
 	)
 }
 
-export const HomeMenu = ({ params, setParams, setFilter }: MenuProps) => {
+export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
+	const [state, setState] = useState('')
+
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		console.log(state)
+		filterState({ key: 'search', val: state })
+		setState('')
+	}
 	const { getRootProps, getRadioProps } = useRadioGroup({
 		name: 'option',
 		defaultValue: 'All users',
 		onChange: val => {
-			setFilter(prev => ({ ...prev, gender: val }))
+			filterState({ key: 'gender', val })
+			setGender(val)
 		},
 	})
 
@@ -85,24 +96,26 @@ export const HomeMenu = ({ params, setParams, setFilter }: MenuProps) => {
 				{' '}
 				Welcome to your dashboard, kindy sort through the user base
 			</Text>
-			<InputGroup mt='10'>
-				<InputLeftElement
-					pointerEvents='none'
-					children={<SearchIcon color='gray.50' />}
-				/>
-				<Input
-					borderRadius={'xl'}
-					variant='filled'
-					placeholder='Search'
-					value={params.seed}
-					onChange={e => setParams(p => ({ ...p, seed: e.target.value }))}
-					size='lg'
-					_focus={{
-						outline: 'none',
-						bgColor: '#fff',
-					}}
-				/>
-			</InputGroup>
+			<form onSubmit={handleSubmit}>
+				<InputGroup mt='10'>
+					<InputLeftElement
+						pointerEvents='none'
+						children={<SearchIcon color='gray.50' />}
+					/>
+					<Input
+						borderRadius={'xl'}
+						variant='filled'
+						placeholder='Search'
+						onChange={e => setState(e.target.value)}
+						value={state}
+						size='lg'
+						_focus={{
+							outline: 'none',
+							bgColor: '#fff',
+						}}
+					/>
+				</InputGroup>
+			</form>
 
 			<Text
 				as='p'

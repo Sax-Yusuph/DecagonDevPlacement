@@ -1,5 +1,6 @@
-import { GetStaticProps } from 'next'
 import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { GetStaticProps } from 'next'
 import { SimpleGrid, Box } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
@@ -7,57 +8,63 @@ import { HomeMenu } from '../components/HomeMenu'
 import Filter from '../components/Filter'
 import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
-import { useEffect, useState } from 'react'
-import { Filterprops, Params } from '../interfaces'
 import { Footer } from '../components/Footer'
-import { PARAMS, BASE_URL, FILTER } from '../options/options'
-import { filterByGender } from '../options/utils'
 
-const Index = () => {
-	const [params, setParams] = useState<Params>(PARAMS)
-	const [filter, setFilter] = useState<Filterprops>(FILTER)
+import { Filterprops } from '../interfaces'
+import { PARAMS, BASE_URL, PAGE_PARAMS } from '../options/options'
+import { filterbySearch } from '../options/utils'
 
+const Index = ({ users }: { users: any[] }) => {
+	const [gender, setGender] = useState<string | number>('')
+
+	const [data, setData] = useState(users)
+	const [UsersList, setUsersList] = useState(data)
 	const [profile, setProfile] = useState([])
-	const [usersList, setUsersList] = useState<any[]>([])
-	const [loading, setLoading] = useState(false)
 	const [showProfile, setShowProfile] = useState(false)
-	const [error, setError] = useState(null)
+	const [pageProps, setPageProps] = useState(PAGE_PARAMS)
 
 	useEffect(() => {
-		const cancelToken = axios.CancelToken.source()
-		async function upDateData() {
-			setLoading(true)
-			setUsersList([])
-			try {
-				const res = await axios(BASE_URL, {
-					cancelToken: cancelToken.token,
-					params,
-				})
-				const results = filterByGender('male', res.data.results)
-				setLoading(false)
-				setUsersList(results)
-			} catch (error) {
-				if (axios.isCancel(error)) return
-				setError(error.message)
-			}
+		const updateUsersList = () => {
+			console.log(pageProps)
+			const lastUserIndex = pageProps.currentPage * 5
+			const firstUserIndex = lastUserIndex - pageProps.postPerPage
+			setUsersList(data.slice(firstUserIndex, lastUserIndex))
 		}
-		upDateData()
-		return () => cancelToken.cancel()
-	}, [params, filter])
+		updateUsersList()
+	}, [pageProps])
 
-	function handlePagination(val: string) {
-		if (val === 'next') {
-			setParams(prev => ({ ...prev, page: params.page + 1 }))
+	function filterState({ key, val }: Filterprops) {
+		// check if key is a search
+		if (key === 'search') {
+			setData(filterbySearch(users, val))
+			return
 		}
-		if (val === 'prev' && params.page > 1) {
-			setParams(prev => ({ ...prev, page: params.page - 1 }))
+		// if not, then perform these operations
+		if (key === 'gender' && val === 'All users') setData(users)
+		else {
+			setData(users.filter(user => user[key] === val))
+		}
+	}
+
+	function paginate(val: string) {
+		if (val === 'next' && pageProps.currentPage !== users.length) {
+			setPageProps(prev => ({
+				...prev,
+				currentPage: pageProps.currentPage + 1,
+			}))
+		}
+		if (val === 'prev' && pageProps.currentPage > 1) {
+			setPageProps(prev => ({
+				...prev,
+				currentPage: pageProps.currentPage - 1,
+			}))
 		}
 	}
 
 	return (
 		<Container height='100vh' bg='blue.800' overflow='hidden'>
 			<SimpleGrid columns={2} spacing={10}>
-				<HomeMenu params={params} setParams={setParams} setFilter={setFilter} />
+				<HomeMenu filterState={filterState} setGender={setGender} />
 				<Box
 					m='4'
 					p={5}
@@ -71,11 +78,15 @@ const Index = () => {
 					display='flex'
 					flexDir='column'
 				>
-					<Filter params={params} setParams={setParams} setFilter={setFilter} />
+					<Filter
+						filterState={filterState}
+						setGender={setGender}
+						gender={gender}
+					/>
 
 					{!showProfile && (
 						<Box px={3} overflowY='auto' overflowX='hidden'>
-							{(usersList || []).map((user: any) => {
+							{UsersList?.map((user: any) => {
 								return (
 									<ResultCard
 										key={user?.login?.uuid || Math.random()}
@@ -88,18 +99,29 @@ const Index = () => {
 						</Box>
 					)}
 
-					{loading && !error && <div>loading...</div>}
-					{error && <div>{error}</div>}
+					{UsersList.length == 0 && <div>loading...</div>}
+					{/* {error && <div>{error}</div>} */}
 
 					{showProfile && (
 						<Profile profile={profile[0]} setShowProfile={setShowProfile} />
 					)}
-					<Footer paginate={handlePagination} />
+					<Footer paginate={paginate} />
 				</Box>
-				{/* <DarkModeSwitch /> */}
 			</SimpleGrid>
 		</Container>
 	)
 }
 
 export default Index
+
+export const getStaticProps: GetStaticProps = async () => {
+	// Todos
+	//1. get query params from ctx and fetch dynamically
+	// from the database or run cloud functions if its not present
+
+	const res = await axios(BASE_URL, {
+		params: { ...PARAMS, results: 100 },
+	})
+
+	return { props: { users: await res.data.results } }
+}

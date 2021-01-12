@@ -54,12 +54,13 @@ export interface iUser {
 }
 
 export interface MenuProps {
-	params: Params
-	setParams: Dispatch<SetStateAction<Params>>
-	setFilter: Dispatch<SetStateAction<Filterprops>>
+	filterState: ({ key, val }: Filterprops) => void
+	setGender: Dispatch<SetStateAction<string | number>>
+	gender?: string | number
 }
 
-export interface Filterprops {
-	gender: string | number
-	search: string
-}
+// export interface Filterprops {
+// 	gender: string | number
+// 	search: string
+// }
+export type Filterprops = { key: string; val: string | number }

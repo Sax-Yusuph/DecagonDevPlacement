@@ -17,8 +17,8 @@ import { COUNTRIES } from '../options/options'
 import { MenuProps } from '../interfaces'
 import { getHeading } from '../options/utils'
 
-export default function Filter({ params, setParams }: MenuProps) {
-	const heading = getHeading(params)
+export default function Filter({ gender, filterState }: MenuProps) {
+	const heading = getHeading(gender)
 
 	return (
 		<Box color='black' mb={8}>
@@ -42,6 +42,7 @@ export default function Filter({ params, setParams }: MenuProps) {
 							outline: 'none',
 							bg: 'gray.400',
 						}}
+						onChange={e => filterState({ key: 'search', val: e.target.value })}
 					/>
 				</InputGroup>
 				<Select
@@ -52,7 +53,7 @@ export default function Filter({ params, setParams }: MenuProps) {
 					}}
 					variant='filled'
 					placeholder='country'
-					onChange={e => setParams(p => ({ ...p, nat: e.target.value }))}
+					onChange={e => filterState({ key: 'nat', val: e.target.value })}
 				>
 					{COUNTRIES.map(country => (
 						<option key={country} value={country}>

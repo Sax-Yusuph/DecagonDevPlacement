@@ -1,6 +1,5 @@
 export const BASE_URL = 'https://randomuser.me/api/'
 export const COUNTRIES = [
-	'Default',
 	'AU',
 	'BR',
 	'CA',
@@ -20,10 +19,8 @@ export const COUNTRIES = [
 	'US',
 ]
 export const PARAMS = {
-	page: 1,
 	seed: 'foobar',
-	results: 10,
-	nat: '',
+	results: 50,
 }
 
 export const genderOptions: (string | number | undefined)[] = [
@@ -35,4 +32,9 @@ export const genderOptions: (string | number | undefined)[] = [
 export const FILTER = {
 	gender: 'all',
 	search: '',
+}
+
+export const PAGE_PARAMS = {
+	currentPage: 1,
+	postPerPage: 5,
 }
