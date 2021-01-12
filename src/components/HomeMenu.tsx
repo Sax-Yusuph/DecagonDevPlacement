@@ -16,7 +16,6 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { MenuProps } from '../interfaces'
 import { genderOptions } from '../options/options'
 import { FormEvent, useState } from 'react'
-// import RadioCard from './RadioButtons'
 
 function RadioCard(props: any) {
 	const { getInputProps, getCheckboxProps } = useRadio(props)

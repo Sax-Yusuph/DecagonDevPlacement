@@ -34,17 +34,17 @@ const Index = ({ users }: { users: any[] }) => {
 	}, [pageProps, data])
 
 	function filterState({ key, val }: Filterprops) {
+		// reset the data if theres no value
+		if (!val) setData(users)
+
 		// check if key is a search
 		if (key === 'search') {
-			console.log(`search ---${key} ${val}`)
 			setData(filterbySearch(users, val))
 			return
 		}
-		console.log(`gender2 ---${key} ${val}`)
 		// if not, then perform these operations
 		if (key === 'gender' && val === 'All users') {
 			setData(users)
-			console.log(data)
 		} else {
 			setData(users.filter(user => user[key] === val))
 			console.log(data)
@@ -110,7 +110,7 @@ const Index = ({ users }: { users: any[] }) => {
 					{showProfile && (
 						<Profile profile={profile[0]} setShowProfile={setShowProfile} />
 					)}
-					<Footer paginate={paginate} />
+					<Footer paginate={paginate} download={UsersList} />
 				</Box>
 			</SimpleGrid>
 		</Container>

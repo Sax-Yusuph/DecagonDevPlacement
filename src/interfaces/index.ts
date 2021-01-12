@@ -58,9 +58,16 @@ export interface MenuProps {
 	setGender: Dispatch<SetStateAction<string | number>>
 	gender?: string | number
 }
+export interface CSVProps {
+	userData: any[]
+	columnDelimiter?: string
+	lineDelimiter?: string
+	filename?: string
+}
 
-// export interface Filterprops {
-// 	gender: string | number
-// 	search: string
-// }
 export type Filterprops = { key: string; val: string | number }
+
+export interface FooterProps {
+	paginate: (val: string) => void
+	download: any[]
+}

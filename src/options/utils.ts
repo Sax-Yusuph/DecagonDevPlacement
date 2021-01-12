@@ -1,6 +1,5 @@
-import axios from 'axios'
 import { FaUsers, FaMale, FaFemale } from 'react-icons/fa'
-import { Params } from '../interfaces'
+import { CSVProps } from '../interfaces'
 export const getColorProp = (value: string) =>
 	value === 'All users'
 		? 'pink.500'
@@ -33,4 +32,49 @@ export const filterbySearch = (usersList: any[], val: string | number) => {
 			user?.location?.street?.name.match(regex) ||
 			user?.location?.state?.match(regex)
 	)
+}
+
+export const convertToCSV = (args: CSVProps) => {
+	const { userData, columnDelimiter = ',', lineDelimiter = '\n' } = args
+
+	if (userData == null || !userData.length) {
+		return null
+	}
+
+	let keys = Object.keys(userData[0])
+
+	let ctr: number
+	let result = ''
+	result += keys.join(columnDelimiter)
+	result += lineDelimiter
+
+	userData.forEach(function (item) {
+		ctr = 0
+		keys.forEach(function (key) {
+			if (ctr > 0) result += columnDelimiter
+
+			result += item[key]
+			ctr++
+		})
+		result += lineDelimiter
+	})
+
+	return result
+}
+
+export const downloadCSV = (args: CSVProps) => {
+	const { userData, filename = 'export.csv' } = args
+	let link
+	var csv = convertToCSV({ userData })
+	if (csv == null) return
+
+	if (!csv.match(/^data:text\/csv/i)) {
+		csv = 'data:text/csv;charset=utf-8,' + csv
+	}
+	const data = encodeURI(csv)
+
+	link = document.createElement('a')
+	link.setAttribute('href', data)
+	link.setAttribute('download', filename)
+	link.click()
 }

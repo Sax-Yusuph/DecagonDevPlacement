@@ -1,15 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import {
-	Flex,
-	FlexProps,
-	Box,
-	Button,
-	IconButton,
-	HStack,
-} from '@chakra-ui/react'
-import { GiCloudDownload, GiRayGun } from 'react-icons/gi'
+import { Box, Button, IconButton, HStack } from '@chakra-ui/react'
+import { GiCloudDownload } from 'react-icons/gi'
+import { FooterProps } from '../interfaces'
+import { CSV_DOWNLOAD_OPTIONS } from '../options/options'
+import { downloadCSV } from '../options/utils'
 
-export const Footer = ({ paginate }) => (
+export const Footer = ({ paginate, download }: FooterProps) => (
 	<Box
 		as='div'
 		alignSelf='flex-end'
@@ -27,6 +23,9 @@ export const Footer = ({ paginate }) => (
 				_hover={{ bgColor: 'purple.600' }}
 				_focus={{ outline: 'none', bgColor: 'purple.400' }}
 				_active={{ bgColor: 'purple.600' }}
+				onClick={() =>
+					downloadCSV({ ...CSV_DOWNLOAD_OPTIONS, userData: download })
+				}
 			>
 				Download Results
 			</Button>

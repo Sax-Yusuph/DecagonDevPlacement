@@ -38,3 +38,7 @@ export const PAGE_PARAMS = {
 	currentPage: 1,
 	postPerPage: 5,
 }
+
+export const CSV_DOWNLOAD_OPTIONS = {
+	filename: 'user-data.csv',
+}
