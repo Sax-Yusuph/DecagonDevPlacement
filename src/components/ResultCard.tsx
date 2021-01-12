@@ -14,10 +14,13 @@ import {
 	Circle,
 } from '@chakra-ui/react'
 
-export default function ResultCard({ user, setProfile, setResults }: any) {
+export default function ResultCard(props: any) {
+	const { user, setProfile, setShowProfile } = props
+
 	const handleClick = (user: any) => {
-		setResults([])
 		setProfile([user])
+		setShowProfile(true)
+		console.log('showedProfile')
 	}
 	return (
 		<HStack mb={3} bg='white' shadow='xl' p={5} spacing={3} borderRadius='xl'>

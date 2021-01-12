@@ -1,6 +1,5 @@
 import { GetStaticProps } from 'next'
 import axios from 'axios'
-import useSWR from 'swr'
 import { Link as ChakraLink, SimpleGrid, Box } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
@@ -10,6 +9,7 @@ import ResultCard from '../components/ResultCard'
 import Profile from '../components/Profile'
 import { useEffect, useState } from 'react'
 import { Params } from '../interfaces'
+import { Footer } from '../components/Footer'
 
 const BASE_URL = 'https://randomuser.me/api/'
 const COUNTRIES = [
@@ -35,22 +35,24 @@ const COUNTRIES = [
 const PARAMS = {
 	page: 1,
 	gender: '',
-	seed: '',
+	seed: 'abc',
 	results: 10,
 	nat: '',
 }
 
-const Index = ({ users }: any) => {
+const Index = () => {
 	const [params, setParams] = useState<Params>(PARAMS)
 
-	const [profile, SetProfile] = useState([])
-	const [usersList, setUsersList] = useState<any[]>(users)
+	const [profile, setProfile] = useState([])
+	const [usersList, setUsersList] = useState<any[]>([])
 	const [loading, setLoading] = useState(false)
+	const [showProfile, setShowProfile] = useState(false)
 
 	useEffect(() => {
 		const cancelToken = axios.CancelToken.source()
 		async function upDateData() {
 			setLoading(true)
+			setUsersList([])
 			const res = await axios(BASE_URL, {
 				cancelToken: cancelToken.token,
 				params,
@@ -90,15 +92,15 @@ const Index = ({ users }: any) => {
 				>
 					<Filter />
 
-					{usersList.length && (
+					{!showProfile && (
 						<Box overflowY='auto' overflowX='hidden'>
 							{(usersList || []).map((user: any) => {
 								return (
 									<ResultCard
 										key={user?.login?.uuid || Math.random()}
 										user={user}
-										SetProfile={SetProfile}
-										// setResults={setResults}
+										setProfile={setProfile}
+										setShowProfile={setShowProfile}
 									/>
 								)
 							})}
@@ -108,8 +110,10 @@ const Index = ({ users }: any) => {
 					{(loading || !usersList?.length) && <div>loading...</div>}
 					{/* {error && <div>failed to load</div>} */}
 
-					{profile.length > 0 && <Profile profile={profile[0]} />}
-					{/* <Footer paginate={handlePagination} /> */}
+					{showProfile && (
+						<Profile profile={profile[0]} setShowProfile={setShowProfile} />
+					)}
+					<Footer paginate={handlePagination} />
 				</Box>
 				{/* <DarkModeSwitch /> */}
 			</SimpleGrid>
@@ -118,15 +122,3 @@ const Index = ({ users }: any) => {
 }
 
 export default Index
-
-export const getStaticProps: GetStaticProps = async () => {
-	// Todos
-	//1. get query params from ctx and fetch dynamically
-	// from the database or run cloud functions if its not present
-
-	const res = await axios(BASE_URL, {
-		params: { seed: 'abc', results: 100 },
-	})
-
-	return { props: { users: await res.data.results } }
-}

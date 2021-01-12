@@ -10,10 +10,15 @@ import {
 	Button,
 } from '@chakra-ui/react'
 import { FiPhoneCall, FiSmartphone } from 'react-icons/fi'
-export default function Profile({ profile }: any) {
+export default function Profile({ profile, setShowProfile }: any) {
 	return (
 		<VStack alignItems='flex-start'>
-			<Button leftIcon={<ArrowBackIcon />} color='gray.500' variant='ghost'>
+			<Button
+				leftIcon={<ArrowBackIcon />}
+				color='gray.500'
+				variant='ghost'
+				onClick={() => setShowProfile(false)}
+			>
 				Results
 			</Button>
 

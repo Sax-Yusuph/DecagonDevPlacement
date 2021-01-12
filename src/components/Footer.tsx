@@ -37,7 +37,7 @@ export const Footer = ({ paginate }) => (
 					bgColor='gray.400'
 					_hover={{ bgColor: 'gray.600' }}
 					_focus={{ outline: 'none', bgColor: 'gray.400' }}
-					onClick={paginate('prev')}
+					onClick={() => paginate('prev')}
 				/>
 				<IconButton
 					aria-label='previous'
@@ -45,7 +45,7 @@ export const Footer = ({ paginate }) => (
 					bgColor='gray.600'
 					_hover={{ bgColor: 'gray.800' }}
 					_focus={{ outline: 'none', bgColor: 'gray.600' }}
-					onClick={paginate('next')}
+					onClick={() => paginate('next')}
 				/>
 			</HStack>
 		</HStack>
