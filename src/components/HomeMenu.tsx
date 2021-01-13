@@ -11,6 +11,7 @@ import {
 	VStack,
 	useRadio,
 	Center,
+	useColorMode,
 } from '@chakra-ui/react'
 
 import { getColorProp, getIconProp } from '../options/utils'
@@ -36,7 +37,7 @@ function RadioCard(props: any) {
 				justifyContent='center'
 				alignItems='center'
 				borderWidth='1px'
-				borderRadius='lg'
+				borderRadius='xl'
 				boxShadow='md'
 				border='none'
 				bg={props.color}
@@ -46,7 +47,7 @@ function RadioCard(props: any) {
 					color: 'white',
 					// bg:
 					transform: 'scale(1.1)',
-					boxShadow: 'lg',
+					shadow: 'lg',
 				}}
 				_hover={{
 					transform: 'scale(1.2)',
@@ -83,6 +84,12 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 
 	const group = getRootProps()
 
+	const { colorMode } = useColorMode()
+	const inputBg = {
+		light: 'rgba(255, 255, 255, 0.366)',
+		dark: 'rgba(0, 0, 0, 0.22)',
+	}
+
 	return (
 		<Center
 			flexDir='column'
@@ -95,7 +102,7 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 				animate={{ opacity: 1 }}
 				transition={{ delay: 1.5, duration: 2 }}
 			>
-				<Heading mb={3}>
+				<Heading mb={3} color='white'>
 					<Text as='span' fontWeight='300'>
 						{' '}
 						Hello,
@@ -113,15 +120,17 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 							children={<SearchIcon color='gray.50' />}
 						/>
 						<Input
+							bg={inputBg[colorMode]}
 							borderRadius={'xl'}
 							variant='filled'
 							placeholder='Search'
 							onChange={e => setState(e.target.value)}
 							value={state}
 							size='lg'
+							color={'blue.900'}
 							_focus={{
 								outline: 'none',
-								bgColor: '#fff',
+								bgColor: 'gray.300',
 							}}
 						/>
 					</InputGroup>
@@ -151,9 +160,9 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 							>
 								<VStack spacing={2}>
 									<RadioCard {...radio} color={getColorProp(value)}>
-										<Icon as={getIconProp(value)} />
+										<Icon as={getIconProp(value)} boxSize={8} />
 									</RadioCard>
-									<Text as='span' color='white' fontSize='10px'>
+									<Text as='span' color='gray.300' fontSize={12}>
 										{value == 'male'
 											? 'Male Users'
 											: value === 'female'

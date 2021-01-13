@@ -1,22 +1,22 @@
-import {
-	ArrowForwardIcon,
-	ArrowRightIcon,
-	EmailIcon,
-	PhoneIcon,
-} from '@chakra-ui/icons'
+import { ArrowForwardIcon, EmailIcon, PhoneIcon } from '@chakra-ui/icons'
 import {
 	Avatar,
 	HStack,
 	Text,
-	Box,
 	VStack,
 	IconButton,
 	Circle,
+	useColorMode,
 } from '@chakra-ui/react'
 import MotionBox from './MotionBox'
 
 export default function ResultCard(props: any) {
 	const { user, setProfile, setShowProfile } = props
+	const { colorMode } = useColorMode()
+	const textColor = { light: 'white', dark: 'blue.900' }
+	const textColor2 = { light: 'gray.50', dark: 'gray.600' }
+	const textColor3 = { light: 'gray.100', dark: 'gray.400' }
+	const bgColor = { light: 'gray.600', dark: 'white' }
 
 	const handleClick = (user: any) => {
 		setProfile([user])
@@ -30,7 +30,7 @@ export default function ResultCard(props: any) {
 		>
 			<HStack
 				mb={3}
-				bg='white'
+				bg={bgColor[colorMode]}
 				shadow='xl'
 				mx={2}
 				p={5}
@@ -40,16 +40,26 @@ export default function ResultCard(props: any) {
 				<Circle p={1} bg='teal.300'>
 					<Avatar src={user.picture.medium} size='lg' />
 				</Circle>
-				<VStack color='black' alignItems='flex-start' width='100%' spacing='1'>
+				<VStack
+					color={textColor[colorMode]}
+					alignItems='flex-start'
+					width='100%'
+					spacing='1'
+				>
 					<Text as='h4' fontWeight='bold'>
 						{`${user.name.title} ${user.name.first} ${user.name.last}`}
 					</Text>
-					<Text as='p' color='gray.600' fontSize='0.9rem' fontStyle='italic'>
+					<Text
+						as='p'
+						color={textColor2[colorMode]}
+						fontSize='0.9rem'
+						fontStyle='italic'
+					>
 						{`${user.location.street.number}, ${user.location.street.name} ${user.location.state}`}
 					</Text>
 					<HStack
 						width='100%'
-						color='gray.400'
+						color={textColor3[colorMode]}
 						justifyContent='space-between'
 						flexWrap='wrap'
 					>

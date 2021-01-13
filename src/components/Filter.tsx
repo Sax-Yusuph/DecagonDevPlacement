@@ -8,6 +8,7 @@ import {
 	InputLeftElement,
 	Select,
 	Text,
+	useColorMode,
 } from '@chakra-ui/react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { DarkModeSwitch } from './DarkModeSwitch'
@@ -17,9 +18,20 @@ import { getHeading } from '../options/utils'
 
 export default function Filter({ gender, filterState }: MenuProps) {
 	const heading = getHeading(gender)
+	const { colorMode } = useColorMode()
+	const bgColor = {
+		light: 'rgba(255, 255, 255, 0.281)',
+		dark: 'gray.300',
+	}
+	const bgColor2 = {
+		light: 'blue.900',
+		dark: 'gray.600',
+	}
+	const color = { light: 'white', dark: 'blue.900' }
+	const color2 = { light: 'black', dark: 'white' }
 
 	return (
-		<Box color='black' mb={8} pl={4} pt={2} width={'100%'}>
+		<Box mb={8} pl={4} pt={2} width={'100%'} color={color[colorMode]}>
 			<Heading mb={1}>{heading}</Heading>
 			<Text as={'span'} color='gray.400'>
 				Filter by
@@ -35,9 +47,11 @@ export default function Filter({ gender, filterState }: MenuProps) {
 						borderRadius={'2xl'}
 						variant='filled'
 						placeholder='Search'
-						bg='gray.300'
+						bg={bgColor[colorMode]}
 						_focus={{
 							outline: 'none',
+						}}
+						_hover={{
 							bg: 'gray.400',
 						}}
 						onChange={e => filterState({ key: 'search', val: e.target.value })}
@@ -45,16 +59,27 @@ export default function Filter({ gender, filterState }: MenuProps) {
 				</InputGroup>
 				<Select
 					borderRadius={'2xl'}
-					bg='gray.300'
+					bg={bgColor[colorMode]}
 					_focus={{
 						outline: 'none',
 					}}
+					_hover={{
+						bg: 'gray.400',
+					}}
 					variant='filled'
 					placeholder='country'
+					// color={color[colorMode]}
 					onChange={e => filterState({ key: 'nat', val: e.target.value })}
 				>
 					{COUNTRIES.map(country => (
-						<option key={country} value={country}>
+						<option
+							key={country}
+							value={country}
+							style={{
+								backgroundColor: bgColor2[colorMode],
+								color: color2[colorMode],
+							}}
+						>
 							{country}
 						</option>
 					))}

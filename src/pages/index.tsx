@@ -7,6 +7,7 @@ import {
 	useBreakpointValue,
 	Flex,
 	Spacer,
+	useColorMode,
 } from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
@@ -33,6 +34,10 @@ const Index = ({ users }: { users: any[] }) => {
 
 	const windowHeight = useBreakpointValue({ base: '100%', md: '100vh' })
 
+	const { colorMode } = useColorMode()
+	const bgColor = { light: 'gray.900', dark: 'blue.800' }
+	const bgColor2 = { light: 'gray.800', dark: 'gray.100' }
+
 	useEffect(() => {
 		const updateUsersList = () => {
 			const lastUserIndex = pageProps.currentPage * pageProps.postPerPage
@@ -44,7 +49,10 @@ const Index = ({ users }: { users: any[] }) => {
 
 	function filterState({ key, val }: Filterprops) {
 		// reset the data if theres no value
-		if (!val) setData(users)
+		if (!val) {
+			setData(users)
+			return
+		}
 
 		// check if key is a search
 		if (key === 'search') {
@@ -56,6 +64,7 @@ const Index = ({ users }: { users: any[] }) => {
 			setData(users)
 		} else {
 			setData(users.filter(user => user[key] === val))
+			console.log(data)
 		}
 	}
 
@@ -77,7 +86,7 @@ const Index = ({ users }: { users: any[] }) => {
 		<Container
 			h={windowHeight}
 			w='100vw'
-			bg='blue.800'
+			bg={bgColor[colorMode]}
 			overflowX='hidden'
 			overflowY={windowHeight === '100vh' ? 'hidden' : 'auto'}
 		>
@@ -88,7 +97,7 @@ const Index = ({ users }: { users: any[] }) => {
 					p={5}
 					px={10}
 					borderRadius='md'
-					bg='gray.100'
+					bg={bgColor2[colorMode]}
 					pos='relative'
 					overflow='hidden'
 					flexDir='column'

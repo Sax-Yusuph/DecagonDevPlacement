@@ -1,5 +1,6 @@
 import { FaUsers, FaMale, FaFemale } from 'react-icons/fa'
 import { CSVProps } from '../interfaces'
+
 export const getColorProp = (value: string) => {
 	return value === 'All users'
 		? 'pink.500'
@@ -9,7 +10,7 @@ export const getColorProp = (value: string) => {
 }
 
 export const getIconProp = (value: string) =>
-	value === 'All users' ? FaUsers : value === 'Males' ? FaMale : FaFemale
+	value === 'All users' ? FaUsers : value === 'male' ? FaMale : FaFemale
 
 export const getHeading = (gender?: string | number) => {
 	if (gender === 'male') return 'Male Users'
