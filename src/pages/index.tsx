@@ -94,8 +94,8 @@ const Index = ({ users }: { users: any[] }) => {
 				<HomeMenu filterState={filterState} setGender={setGender} />
 				<Flex
 					m={[4, null, 4]}
-					p={5}
-					px={10}
+					py={5}
+					px={[2, null, 10]}
 					borderRadius='md'
 					bg={bgColor2[colorMode]}
 					pos='relative'
@@ -114,7 +114,7 @@ const Index = ({ users }: { users: any[] }) => {
 							<MotionBox
 								initial={{ y: 50, opacity: 0 }}
 								animate={{ y: 0, opacity: 1 }}
-								style={{ overflowY: 'auto' }}
+								style={{ overflowY: 'auto', width: '100%' }}
 								exit={{ opacity: 0, y: -50 }}
 							>
 								<Box flexDir='column' overflowY='auto' overflowX='hidden'>

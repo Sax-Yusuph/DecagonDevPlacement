@@ -1,5 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import { Box, Button, IconButton, HStack, useColorMode } from '@chakra-ui/react'
+import {
+	Box,
+	Button,
+	IconButton,
+	HStack,
+	useColorMode,
+	Flex,
+	Spacer,
+} from '@chakra-ui/react'
 import { GiCloudDownload } from 'react-icons/gi'
 import { FooterProps } from '../interfaces'
 import { CSV_DOWNLOAD_OPTIONS } from '../options/options'
@@ -15,7 +23,14 @@ export const Footer = ({ paginate, download, disableProps }: FooterProps) => {
 	const buttonColor2 = { light: 'black', dark: 'black' }
 	return (
 		<Box as='div' alignSelf='flex-end' w='100%' bg={bgColor2[colorMode]}>
-			<HStack pt={3} mt={3} spacing={20} justifyContent='space-between'>
+			<Flex
+				pt={3}
+				mt={3}
+				px={3}
+				spacing={20}
+				justifyContent='space-between'
+				width={'100%'}
+			>
 				<MotionBox whileTap={{ scale: 0.8 }}>
 					<Button
 						color='white'
@@ -33,7 +48,8 @@ export const Footer = ({ paginate, download, disableProps }: FooterProps) => {
 						Download Results
 					</Button>
 				</MotionBox>
-				<HStack justifySelf='flex-end'>
+				<Spacer />
+				<HStack>
 					<MotionBox whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
 						<IconButton
 							aria-label='previous'
@@ -57,7 +73,7 @@ export const Footer = ({ paginate, download, disableProps }: FooterProps) => {
 						/>
 					</MotionBox>
 				</HStack>
-			</HStack>
+			</Flex>
 		</Box>
 	)
 }

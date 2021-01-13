@@ -1,11 +1,6 @@
 import { useEffect, useReducer } from 'react'
 import axios from 'axios'
 
-interface UserProps {
-	page: number
-	gender: string
-}
-
 const ACTIONS = {
 	MAKE_REQUEST: ' make-request',
 	GET_DATA: 'get-data',

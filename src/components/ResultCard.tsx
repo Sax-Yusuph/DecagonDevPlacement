@@ -43,7 +43,7 @@ export default function ResultCard(props: any) {
 				<VStack
 					color={textColor[colorMode]}
 					alignItems='flex-start'
-					width='100%'
+					// width='100%'
 					spacing='1'
 				>
 					<Text as='h4' fontWeight='bold'>
@@ -52,7 +52,7 @@ export default function ResultCard(props: any) {
 					<Text
 						as='p'
 						color={textColor2[colorMode]}
-						fontSize='0.9rem'
+						fontSize={['xs', null, 'sm']}
 						fontStyle='italic'
 					>
 						{`${user.location.street.number}, ${user.location.street.name} ${user.location.state}`}
@@ -65,13 +65,13 @@ export default function ResultCard(props: any) {
 					>
 						<HStack>
 							<EmailIcon />
-							<Text as='p' fontSize='0.9rem'>
+							<Text as='p' fontSize={['xs', null, 'sm']}>
 								{user.email}
 							</Text>
 						</HStack>
 						<HStack>
 							<PhoneIcon />
-							<Text fontSize='0.9rem'>{user.phone}</Text>
+							<Text fontSize={['xs', null, 'sm']}>{user.phone}</Text>
 						</HStack>
 						<MotionBox whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
 							<IconButton
