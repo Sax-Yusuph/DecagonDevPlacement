@@ -23,14 +23,7 @@ export const Footer = ({ paginate, download, disableProps }: FooterProps) => {
 	const buttonColor2 = { light: 'black', dark: 'black' }
 	return (
 		<Box as='div' alignSelf='flex-end' w='100%' bg={bgColor2[colorMode]}>
-			<Flex
-				pt={3}
-				mt={3}
-				px={3}
-				spacing={20}
-				justifyContent='space-between'
-				width={'100%'}
-			>
+			<Flex pt={3} mt={3} px={3} width={'100%'}>
 				<MotionBox whileTap={{ scale: 0.8 }}>
 					<Button
 						color='white'
