@@ -36,7 +36,7 @@ export const FILTER = {
 
 export const PAGE_PARAMS = {
 	currentPage: 1,
-	postPerPage: 5,
+	postPerPage: 10,
 }
 
 export const CSV_DOWNLOAD_OPTIONS = {

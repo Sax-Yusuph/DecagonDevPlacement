@@ -1,7 +1,13 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { GetStaticProps } from 'next'
-import { SimpleGrid, Box } from '@chakra-ui/react'
+import {
+	SimpleGrid,
+	Box,
+	useBreakpointValue,
+	Flex,
+	Spacer,
+} from '@chakra-ui/react'
 
 import { Container } from '../components/Container'
 import { HomeMenu } from '../components/HomeMenu'
@@ -13,9 +19,11 @@ import { Footer } from '../components/Footer'
 import { Filterprops } from '../interfaces'
 import { PARAMS, BASE_URL, PAGE_PARAMS } from '../options/options'
 import { filterbySearch } from '../options/utils'
+import MotionBox from '../components/MotionBox'
+import { AnimatePresence } from 'framer-motion'
 
 const Index = ({ users }: { users: any[] }) => {
-	const [gender, setGender] = useState<string | number>('')
+	const [gender, setGender] = useState<string | number>('All Users')
 
 	const [data, setData] = useState(users)
 	const [UsersList, setUsersList] = useState(data)
@@ -23,10 +31,11 @@ const Index = ({ users }: { users: any[] }) => {
 	const [showProfile, setShowProfile] = useState(false)
 	const [pageProps, setPageProps] = useState(PAGE_PARAMS)
 
+	const windowHeight = useBreakpointValue({ base: '100%', md: '100vh' })
+
 	useEffect(() => {
 		const updateUsersList = () => {
-			console.log(pageProps)
-			const lastUserIndex = pageProps.currentPage * 5
+			const lastUserIndex = pageProps.currentPage * pageProps.postPerPage
 			const firstUserIndex = lastUserIndex - pageProps.postPerPage
 			setUsersList(data.slice(firstUserIndex, lastUserIndex))
 		}
@@ -47,7 +56,6 @@ const Index = ({ users }: { users: any[] }) => {
 			setData(users)
 		} else {
 			setData(users.filter(user => user[key] === val))
-			console.log(data)
 		}
 	}
 
@@ -65,23 +73,26 @@ const Index = ({ users }: { users: any[] }) => {
 			}))
 		}
 	}
-
 	return (
-		<Container height='100vh' bg='blue.800' overflow='hidden'>
-			<SimpleGrid columns={[1, null, 2]} spacing={10}>
+		<Container
+			h={windowHeight}
+			w='100vw'
+			bg='blue.800'
+			overflowX='hidden'
+			overflowY={windowHeight === '100vh' ? 'hidden' : 'auto'}
+		>
+			<SimpleGrid height='100%' columns={[1, null, 2]} spacing={[5, null, 10]}>
 				<HomeMenu filterState={filterState} setGender={setGender} />
-				<Box
-					m='4'
+				<Flex
+					m={[4, null, 4]}
 					p={5}
 					px={10}
 					borderRadius='md'
 					bg='gray.100'
-					minWidth='50vw'
-					h='96vh'
 					pos='relative'
 					overflow='hidden'
-					display='flex'
 					flexDir='column'
+					alignItems='flex-start'
 				>
 					<Filter
 						filterState={filterState}
@@ -90,32 +101,44 @@ const Index = ({ users }: { users: any[] }) => {
 					/>
 
 					{!showProfile && (
-						<Box px={3} overflowY='auto' overflowX='hidden'>
-							{UsersList?.map((user: any) => {
-								return (
-									<ResultCard
-										key={user?.login?.uuid || Math.random()}
-										user={user}
-										setProfile={setProfile}
-										setShowProfile={setShowProfile}
-									/>
-								)
-							})}
-						</Box>
+						<AnimatePresence>
+							<MotionBox
+								initial={{ y: 50, opacity: 0 }}
+								animate={{ y: 0, opacity: 1 }}
+								style={{ overflowY: 'auto' }}
+								exit={{ opacity: 0, y: -50 }}
+							>
+								<Box flexDir='column' overflowY='auto' overflowX='hidden'>
+									{UsersList?.map((user: any) => {
+										return (
+											<ResultCard
+												key={user?.login?.uuid || Math.random()}
+												user={user}
+												setProfile={setProfile}
+												setShowProfile={setShowProfile}
+											/>
+										)
+									})}
+								</Box>
+							</MotionBox>
+						</AnimatePresence>
 					)}
 
 					{UsersList.length == 0 && <div>loading...</div>}
 					{/* {error && <div>{error}</div>} */}
 
 					{showProfile && (
-						<Profile profile={profile[0]} setShowProfile={setShowProfile} />
+						<AnimatePresence>
+							<Profile profile={profile[0]} setShowProfile={setShowProfile} />
+						</AnimatePresence>
 					)}
+					<Spacer />
 					<Footer
 						paginate={paginate}
 						download={UsersList}
 						disableProps={showProfile ? true : false}
 					/>
-				</Box>
+				</Flex>
 			</SimpleGrid>
 		</Container>
 	)

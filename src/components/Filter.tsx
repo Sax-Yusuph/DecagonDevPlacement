@@ -19,13 +19,13 @@ export default function Filter({ gender, filterState }: MenuProps) {
 	const heading = getHeading(gender)
 
 	return (
-		<Box color='black' mb={8}>
+		<Box color='black' mb={8} pl={4} pt={2} width={'100%'}>
 			<Heading mb={1}>{heading}</Heading>
 			<Text as={'span'} color='gray.400'>
 				Filter by
 			</Text>
 
-			<HStack spacing={4} mt={1}>
+			<HStack spacing={4} mt={2}>
 				<InputGroup>
 					<InputLeftElement
 						pointerEvents='none'
@@ -60,7 +60,7 @@ export default function Filter({ gender, filterState }: MenuProps) {
 					))}
 				</Select>
 
-				<FormControl display='flex' alignItems='center'>
+				<FormControl display='flex' flex={1} alignItems='center'>
 					<DarkModeSwitch />
 				</FormControl>
 			</HStack>
