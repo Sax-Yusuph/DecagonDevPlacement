@@ -100,7 +100,7 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 			<MotionBox
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				transition={{ delay: 1.5, duration: 2 }}
+				// transition={{ delay: 1.5, duration: 2 }}
 			>
 				<Heading mb={3} color='white'>
 					<Text as='span' fontWeight='300'>
@@ -155,7 +155,6 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 							<MotionBox
 								whileHover={{ scale: 1.1 }}
 								whileTap={{ scale: 0.9 }}
-								// transition={{ delay: 1 }}
 								key={value}
 							>
 								<VStack spacing={2}>
