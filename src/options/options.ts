@@ -23,11 +23,7 @@ export const PARAMS = {
 	results: 100,
 }
 
-export const genderOptions: (string | number | undefined)[] = [
-	'All users',
-	'male',
-	'female',
-]
+export const genderOptions: any[] = ['All users', 'male', 'female']
 
 export const FILTER = {
 	gender: 'all',

@@ -100,7 +100,8 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 			<MotionBox
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
-				// transition={{ delay: 1.5, duration: 2 }}
+				// @ts-ignore
+				transition={{ delay: 1.5, duration: 2 }}
 			>
 				<Heading mb={3} color='white'>
 					<Text as='span' fontWeight='300'>
@@ -150,11 +151,14 @@ export const HomeMenu = ({ filterState, setGender }: MenuProps) => {
 
 				<HStack {...group} spacing={8}>
 					{genderOptions.map((value: any) => {
+						// @ts-ignore
 						const radio = getRadioProps({ value })
 						return (
 							<MotionBox
 								whileHover={{ scale: 1.1 }}
 								whileTap={{ scale: 0.9 }}
+								// @ts-ignore
+								transition={{ delay: 1 }}
 								key={value}
 							>
 								<VStack spacing={2}>
