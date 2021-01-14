@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react'
-import ResultCard from '../../components/ResultCard'
+import ResultCard from '../components/ResultCard'
 import MatchedMediaMock from 'jest-matchmedia-mock'
-import users from '../../__mocks__/users'
-import Index from '../../pages/index'
+import users from '../__mocks__/users'
+import Index from '../pages/index'
 
 let matchMedia
 
