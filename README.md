@@ -27,7 +27,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ### :pencil: Notes while experimenting randomuser.me API 
-1.   Although the api supports filter data based on gender, the data return is inconsistent when navigating the pages without `seed` params.
+1. :bug:  Although the api supports filter data based on gender, the data return is inconsistent when navigating the pages without `seed` params.
    ```
       const data1 = await axios('https://randomuser.me/api/1.0/?&results=10&gender=male')
       const data2 = await axios('https://randomuser.me/api/1.0/?&results=10&gender=male')
@@ -45,7 +45,7 @@
    ```
 
 
-2. I tried achieving it with `seed` params which allows you to generate same set of data. but there was a **tradeoff** : - _i won't be able to filter based on gender anymore as the data returned will still be the same._
+2. :bug:  I tried achieving it with `seed` params which allows you to generate same set of data. but there was a **tradeoff** : - _i won't be able to filter based on gender anymore as the data returned will still be the same._
     ```
       const data1 = await axios('https://randomuser.me/api/1.0/?&seed=foobar&results=10&gender=female')
       const data2 = await axios('https://randomuser.me/api/1.0/?&seed=foobar&results=10&gender=male')
@@ -60,13 +60,15 @@
 
      <!-- output 
       data1 === data2
-     :bug:  data remains the same because of the seed params present.
+      data remains the same because of the seed params present.
      -->
    ```
-3. :dart: **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API.
+3. **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API. :dart:
 4. pagination works well with `seed` params.
+<br/>
+<br/>
 
-### :cherries: :tada: Built With 
+###  Built With :tada: :tada:
 
 The dashboard was built with the following amazing open source projects
 * [randomuser Api]([randomuser.me/](https://randomuser.me/))
@@ -77,7 +79,7 @@ The dashboard was built with the following amazing open source projects
 * [Vercel](https://vercel.com) for static hosting
 
 
-### :pill: Extra features i added
+### Extra features i added :pill: :pill:
 * Dark mode feature
 * Search can filter based on any of the user property
 * Pagination
