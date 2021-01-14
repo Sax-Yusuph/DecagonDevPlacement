@@ -15,6 +15,7 @@ import { DarkModeSwitch } from './DarkModeSwitch'
 import { COUNTRIES } from '../options/options'
 import { MenuProps } from '../interfaces'
 import { getHeading } from '../options/utils'
+import MotionBox from './MotionBox'
 
 export default function Filter({ gender, filterState }: MenuProps) {
   const heading = getHeading(gender)
@@ -32,21 +33,41 @@ export default function Filter({ gender, filterState }: MenuProps) {
 
   return (
     <Box mb={8} pl={4} pt={2} width={'100%'} color={color[colorMode]}>
-      <Heading mb={1}>{heading}</Heading>
-      <Text as={'span'} color="gray.400">
-        Filter by
-      </Text>
+      <MotionBox
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        // @ts-ignore
+        transition={{ delay: 1.5, duration: 2 }}
+      >
+        <Heading mb={1}>{heading}</Heading>
+        <Text as={'span'} color="gray.400">
+          Filter by
+        </Text>
 
-      <HStack spacing={4} mt={2}>
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon color="gray.50" />}
-          />
-          <Input
+        <HStack spacing={4} mt={2}>
+          <InputGroup>
+            <InputLeftElement
+              pointerEvents="none"
+              children={<SearchIcon color="gray.50" />}
+            />
+            <Input
+              borderRadius={'2xl'}
+              variant="filled"
+              placeholder="Search"
+              bg={bgColor[colorMode]}
+              _focus={{
+                outline: 'none',
+              }}
+              _hover={{
+                bg: 'gray.400',
+              }}
+              onChange={(e) =>
+                filterState({ key: 'search', val: e.target.value })
+              }
+            />
+          </InputGroup>
+          <Select
             borderRadius={'2xl'}
-            variant="filled"
-            placeholder="Search"
             bg={bgColor[colorMode]}
             _focus={{
               outline: 'none',
@@ -54,43 +75,30 @@ export default function Filter({ gender, filterState }: MenuProps) {
             _hover={{
               bg: 'gray.400',
             }}
-            onChange={(e) =>
-              filterState({ key: 'search', val: e.target.value })
-            }
-          />
-        </InputGroup>
-        <Select
-          borderRadius={'2xl'}
-          bg={bgColor[colorMode]}
-          _focus={{
-            outline: 'none',
-          }}
-          _hover={{
-            bg: 'gray.400',
-          }}
-          variant="filled"
-          placeholder="country"
-          // color={color[colorMode]}
-          onChange={(e) => filterState({ key: 'nat', val: e.target.value })}
-        >
-          {COUNTRIES.map((country) => (
-            <option
-              key={country}
-              value={country}
-              style={{
-                backgroundColor: bgColor2[colorMode],
-                color: color2[colorMode],
-              }}
-            >
-              {country}
-            </option>
-          ))}
-        </Select>
+            variant="filled"
+            placeholder="country"
+            // color={color[colorMode]}
+            onChange={(e) => filterState({ key: 'nat', val: e.target.value })}
+          >
+            {COUNTRIES.map((country) => (
+              <option
+                key={country}
+                value={country}
+                style={{
+                  backgroundColor: bgColor2[colorMode],
+                  color: color2[colorMode],
+                }}
+              >
+                {country}
+              </option>
+            ))}
+          </Select>
 
-        <FormControl display="flex" flex={1} alignItems="center">
-          <DarkModeSwitch />
-        </FormControl>
-      </HStack>
+          <FormControl display="flex" flex={1} alignItems="center">
+            <DarkModeSwitch />
+          </FormControl>
+        </HStack>
+      </MotionBox>
     </Box>
   )
 }

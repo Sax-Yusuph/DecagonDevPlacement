@@ -8,8 +8,8 @@ import {
   Flex,
   Spacer,
   useColorMode,
-  Container,
 } from '@chakra-ui/react'
+import { Container } from '../components/Container'
 
 import { HomeMenu } from '../components/HomeMenu'
 import Filter from '../components/Filter'
@@ -90,12 +90,17 @@ const Index = ({ users }: { users: any[] }) => {
       overflowX="hidden"
       overflowY={windowHeight === '100vh' ? 'hidden' : 'auto'}
     >
-      <SimpleGrid height="100%" columns={[1, null, 2]} spacing={[5, null, 10]}>
+      <SimpleGrid
+        height="100%"
+        width="100%"
+        columns={[1, null, 2]}
+        spacing={[5, 5, 10]}
+      >
         <HomeMenu filterState={filterState} setGender={setGender} />
         <Flex
           m={[4, null, 4]}
           py={5}
-          px={[2, null, 10]}
+          px={[2, null, 5]}
           borderRadius="md"
           bg={bgColor2[colorMode]}
           pos="relative"
