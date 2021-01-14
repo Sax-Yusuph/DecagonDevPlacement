@@ -63,11 +63,9 @@
       data remains the same because of the seed params present.
      -->
    ```
-3. **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API. :dart:
+3. :dart: **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API. 
 4. pagination works well with `seed` params.
 <br/>
-<br/>
-
 ###  Built With :tada: :tada:
 
 The dashboard was built with the following amazing open source projects
@@ -79,7 +77,7 @@ The dashboard was built with the following amazing open source projects
 * [Vercel](https://vercel.com) for static hosting
 
 
-### Extra features i added :pill: :pill:
+### Extra features i added :tada: :tada:
 * Dark mode feature
 * Search can filter based on any of the user property
 * Pagination
