@@ -12,7 +12,7 @@
 </p>
 
 ![GitHub repo size](https://img.shields.io/github/repo-size/Sax-Yusuph/Web-Dashboard-UI)
-![build](https://img.shields.io/appveyor/build/Sax-Yusuph/Web-Dashboard-UI)
+![tests](https://img.shields.io/travis/Sax-Yusuph/Web-Dashboard-UI/main?style=flat-square)
 ![tests](https://img.shields.io/appveyor/tests/Sax-Yusuph/Web-Dashboard-UI)
 ![GitHub forks](https://img.shields.io/github/forks/Sax-Yusuph/Web-Dashboard-UI?label=Forks&style=social)
 ![Twitter Follow](https://img.shields.io/twitter/follow/yusuphtweets?style=social)
