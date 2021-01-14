@@ -3,7 +3,7 @@
     <img src="logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Decagon Web Dashboard </h3>
+  <h1 align="center">Decagon Web Dashboard </h1>
 
   <p align="center">
     This repository contains source code for the web dashboard ui
@@ -11,18 +11,20 @@
     <a href="https://web-dashboard-ui.vercel.app/"><strong>Explore Demo »</strong></a>
 </p>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Sax-Yusuph/Web-Dashboard-UI)
-![tests](https://img.shields.io/travis/Sax-Yusuph/Web-Dashboard-UI/main?style=flat-square)
-![tests](https://img.shields.io/appveyor/tests/Sax-Yusuph/Web-Dashboard-UI)
-![GitHub forks](https://img.shields.io/github/forks/Sax-Yusuph/Web-Dashboard-UI?label=Forks&style=social)
-![Twitter Follow](https://img.shields.io/twitter/follow/yusuphtweets?style=social)
+![GitHub repo size](https://img.shields.io/github/repo-size/Sax-Yusuph/Web-Dashboard-UI?style=flat-square)
+[![Build Status](https://travis-ci.com/Sax-Yusuph/Web-Dashboard-UI.svg?branch=main)](https://travis-ci.com/Sax-Yusuph/Web-Dashboard-UI?style=flat-square)
+[![Coverage Status](https://coveralls.io/repos/github/Sax-Yusuph/Web-Dashboard-UI/badge.svg?branch=main)](https://coveralls.io/github/Sax-Yusuph/Web-Dashboard-UI?branch=main?style=flat-square)
+![GitHub](https://img.shields.io/github/license/Sax-Yusuph/Web-Dashboard-UI)
+![GitHub forks](https://img.shields.io/github/forks/Sax-Yusuph/Web-Dashboard-UI?label=Forks&style=flat-square)
+![Twitter Follow](https://img.shields.io/twitter/follow/yusuphtweets?style=flat-square)
+
 
 
 
 
 
 <!-- ABOUT THE PROJECT -->
-## Notes while experimenting randomuser.me API
+### Notes while experimenting randomuser.me API
 1. Although the api supports filter data based on gender, the data return is inconsistent when navigating the pages without `seed` params.
    ```
       const data1 = await axios('https://randomuser.me/api/1.0/?&results=10&gender=male')
