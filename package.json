@@ -11,7 +11,8 @@
     "lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest",
     "test-all": "yarn lint && yarn type-check && yarn test",
-    "cypress": "node_modules/.bin/cypress open"
+    "cypress": "node_modules/.bin/cypress open",
+    "coveralls": "cat ./coverage/lcov.info | node_modules/.bin/coveralls"
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
