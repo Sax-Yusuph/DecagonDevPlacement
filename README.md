@@ -26,19 +26,20 @@
 
 
 <!-- ABOUT THE PROJECT -->
-### Notes while experimenting randomuser.me API
-1. Although the api supports filter data based on gender, the data return is inconsistent when navigating the pages without `seed` params.
+### :pencil: Notes while experimenting randomuser.me API 
+1.   Although the api supports filter data based on gender, the data return is inconsistent when navigating the pages without `seed` params.
    ```
       const data1 = await axios('https://randomuser.me/api/1.0/?&results=10&gender=male')
       const data2 = await axios('https://randomuser.me/api/1.0/?&results=10&gender=male')
 
-      <!-- expected result
-      data1 == data2
-      data1 should be equal to data2 on every call since *if* we are using the same params 
+      <!-- expected result 
+      // _if we use the same params to call the API_
+           data1 == data2
+       data1 should be equal to data2 on every call since we are using the same params 
        -->
       <!-- output 
       // data1 !== data2
-      data remains the same because of the seed params.
+     :bug:  but data1 is not the same as data 2 despite using the same params
       -->
       
    ```
@@ -50,21 +51,22 @@
       const data2 = await axios('https://randomuser.me/api/1.0/?&seed=foobar&results=10&gender=male')
 
       <!-- expected result
-      data1 !== data2
+      // now if we use the different params to call the API. in this case by gender.
+           data1 !== data2
       data1 should not be equal with data2 since they are filtering based on different gender. 
-      meaning: they have different params.
+      
        -->
 
 
      <!-- output 
       data1 === data2
-      data remains the same because of the seed params.
+     :bug:  data remains the same because of the seed params present.
      -->
    ```
-3. **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API.
+3. :dart: **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API.
 4. pagination works well with `seed` params.
 
-### Built With 
+### :cherries: :tada: Built With 
 
 The dashboard was built with the following amazing open source projects
 * [randomuser Api]([randomuser.me/](https://randomuser.me/))
@@ -75,24 +77,9 @@ The dashboard was built with the following amazing open source projects
 * [Vercel](https://vercel.com) for static hosting
 
 
-
-
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
+### :pill: Extra features i added
+* Dark mode feature
+* Search can filter based on any of the user property
+* Pagination
+* Subtle animations
+* Download users on current page into CSV
