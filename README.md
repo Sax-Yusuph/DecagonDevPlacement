@@ -11,13 +11,15 @@
     <a href="https://web-dashboard-ui.vercel.app/"><strong>Explore Demo »</strong></a>
 </p>
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Sax-Yusuph/Web-Dashboard-UI?style=flat-square)
-[![Build Status](https://travis-ci.com/Sax-Yusuph/Web-Dashboard-UI.svg?branch=main)](https://travis-ci.com/Sax-Yusuph/Web-Dashboard-UI?style=flat-square)
-[![Coverage Status](https://coveralls.io/repos/github/Sax-Yusuph/Web-Dashboard-UI/badge.svg?branch=main)](https://coveralls.io/github/Sax-Yusuph/Web-Dashboard-UI?branch=main?style=flat-square)
-![GitHub](https://img.shields.io/github/license/Sax-Yusuph/Web-Dashboard-UI)
-![GitHub forks](https://img.shields.io/github/forks/Sax-Yusuph/Web-Dashboard-UI?label=Forks&style=flat-square)
-![Twitter Follow](https://img.shields.io/twitter/follow/yusuphtweets?style=flat-square)
+<p align="center">
 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Sax-Yusuph/Web-Dashboard-UI?style=for-the-badge)
+![Travis (.com) branch](https://img.shields.io/travis/com/Sax-Yusuph/Web-Dashboard-UI/main?style=for-the-badge)
+![Coveralls github](https://img.shields.io/coveralls/github/Sax-Yusuph/Web-Dashboard-UI?logo=c&logoColor=%234caf50&style=for-the-badge)
+![GitHub](https://img.shields.io/github/license/Sax-Yusuph/Web-Dashboard-UI?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/Sax-Yusuph/Web-Dashboard-UI?label=Forks&style=for-the-badge)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/Sax-Yusuph/Web-Dashboard-UI?style=for-the-badge&color=%23ff6800)
+</p>
 
 
 
@@ -69,6 +71,9 @@ The dashboard was built with the following amazing open source projects
 * [chakra-ui](https://chakra-ui.com)
 * [framer motion](https://www.framer.com/motion/)
 * [nextjs](https://nextjs.org/)
+* [Travis](https://travis-ci.com) for CICD
+* [Vercel](https://vercel.com) for static hosting
+
 
 
 
