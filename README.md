@@ -65,9 +65,10 @@
    ```
 3. :dart: **Bottomline:** I resolved to fetching the data once, and do all the filtering manualy rather than relying on the API. 
 4. pagination works well with `seed` params.
-<br/>
-###  Built With :tada: :tada:
 
+<br/>
+
+### Built With :tada:  :tada:
 The dashboard was built with the following amazing open source projects
 * [randomuser Api]([randomuser.me/](https://randomuser.me/))
 * [chakra-ui](https://chakra-ui.com)
