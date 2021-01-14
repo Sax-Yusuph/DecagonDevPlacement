@@ -1,5 +1,3 @@
-<!-- PROJECT LOGO -->
-<br />
 <p align="center">
   <a href="https://github.com/Sax-Yusuph/Web-Dashboard-UI">
     <img src="logo.png" alt="Logo" width="80" height="80">
